@@ -28,7 +28,11 @@
   |ObjectMap.h|基础对象存储器;优先级对象存储器|
   |Singleton.hpp|单例模板|
   |Subject.hpp|观察者模板|
-  |Common.h|QString 支持std::map; C++11 的 enum 和 int互转;快速计算md5;计算percent字符串;简易socket数据封包、拆包|
+  |Common.h|QString 支持std::map;
+  C++11 的 enum 和 int互转;
+  计算md5;
+  计算percent字符串;
+  简易socket数据封包、拆包|
   |Tools|文件信息FileInfo相关处理;文件夹QDir相关操作。主要给Qml扩展|
 
 ## 答疑和技术支持
