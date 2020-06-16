@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "TaoCommonApi.h"
-#include "ThreadCommon.h"
+#include "taocommonglobal.h"
+#include "threadcommon.h"
 #include <QMap>
-
+#include <QThread>
 namespace TaoCommon
 {
     // 对Qt Worker-Controller 线程模型的简单封装，适合精确控制的任务。

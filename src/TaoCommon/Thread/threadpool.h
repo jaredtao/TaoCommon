@@ -1,6 +1,8 @@
 ﻿#pragma once
-#include "ThreadCommon.h"
-#include "TaoCommonApi.h"
+#include "taocommonglobal.h"
+#include "threadcommon.h"
+#include <QObject>
+#include <QRunnable>
 namespace TaoCommon
 {
     // 对Qt线程池的简单封装，适合一次性执行的任务。

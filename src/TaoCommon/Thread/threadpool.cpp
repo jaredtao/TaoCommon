@@ -1,5 +1,6 @@
-#include "ThreadPool.h"
+#include "threadpool.h"
 
+#include <QThreadPool>
 namespace TaoCommon
 {
     ThreadObject::ThreadObject(const WorkCallback& work) : m_workCall(work) {}

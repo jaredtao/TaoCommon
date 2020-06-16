@@ -1,5 +1,5 @@
 #pragma once
-#include "TaoCommonApi.h"
+#include "taocommonglobal.h"
 #include <QString>
 #include <QDebug>
 namespace Logger

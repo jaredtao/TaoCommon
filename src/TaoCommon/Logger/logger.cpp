@@ -1,5 +1,5 @@
-#include "Logger.h"
-#include "LoggerTemplate.h"
+#include "logger.h"
+#include "loggertemplate.h"
 
 #include <QCoreApplication>
 #include <QDateTime>

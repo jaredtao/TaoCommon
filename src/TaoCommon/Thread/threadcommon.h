@@ -1,8 +1,5 @@
 #pragma once
-
-#include <QRunnable>
-#include <QThreadPool>
-#include <QThread>
+#include <QMetaType>
 #include <functional>
 namespace TaoCommon
 {

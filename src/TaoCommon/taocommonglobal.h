@@ -1,5 +1,5 @@
 #pragma once
-#include <QtGlobal>
+#include <QtCore/QtGlobal>
 
 #ifndef BUILD_STATIC
 # if defined(TaoCommon_Library)

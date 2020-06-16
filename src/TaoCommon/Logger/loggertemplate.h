@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <QString>
-#include <string>
 namespace Logger
 {
     const static QString logTemplate = u8R"logTemplate(
