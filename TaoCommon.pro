@@ -4,4 +4,5 @@ OTHER_FILES += \
     .* \
     LICENSE \
     *.md \
-    *.profile
+    *.profile \
+    .github/workflows/*

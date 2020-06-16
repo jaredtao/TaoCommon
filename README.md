@@ -6,6 +6,28 @@
 
 必须是经过实际项目验证过的。
 
+## CI
+
+| [Windows][win-link]| [Ubuntu][ubuntu-link]|[MacOS][macos-link]|[Android][android-link]|[IOS][ios-link]|
+|---------------|---------------|-----------------|-----------------|----------------|
+| ![win-badge]  | ![ubuntu-badge]      | ![macos-badge] |![android-badge]   |![ios-badge]   |
+
+
+[win-link]: https://github.com/JaredTao/TaoCommon/actions?query=workflow%3AWindows "WindowsAction"
+[win-badge]: https://github.com/JaredTao/TaoCommon/workflows/Windows/badge.svg  "Windows"
+
+[ubuntu-link]: https://github.com/JaredTao/TaoCommon/actions?query=workflow%3AUbuntu "UbuntuAction"
+[ubuntu-badge]: https://github.com/JaredTao/TaoCommon/workflows/Ubuntu/badge.svg "Ubuntu"
+
+[macos-link]: https://github.com/JaredTao/TaoCommon/actions?query=workflow%3AMacOS "MacOSAction"
+[macos-badge]: https://github.com/JaredTao/TaoCommon/workflows/MacOS/badge.svg "MacOS"
+
+[android-link]: https://github.com/JaredTao/TaoCommon/actions?query=workflow%3AAndroid "AndroidAction"
+[android-badge]: https://github.com/JaredTao/TaoCommon/workflows/Android/badge.svg "Android"
+
+[ios-link]: https://github.com/JaredTao/TaoCommon/actions?query=workflow%3AIOS "IOSAction"
+[ios-badge]: https://github.com/JaredTao/TaoCommon/workflows/IOS/badge.svg "IOS"
+
 ## 内容
 
 按文件夹分类
