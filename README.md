@@ -1,10 +1,12 @@
 ﻿# TaoCommon
 
+## 简介
+
 收集一些常用的Qt后端代码，以便以后复用。
 
 必须是经过实际项目验证过的。
 
-# 内容
+## 内容
 
 按文件夹分类
 
@@ -29,14 +31,32 @@
   |Singleton.hpp|单例模板|
   |Subject.hpp|观察者模板|
   |Common.h|QString 支持std::map; <br/>C++11 的 enum 和 int互转; <br/> 计算md5; <br/> 计算percent字符串;<br/> 简易socket数据封包、拆包|
-  |Tools|文件信息FileInfo相关处理;文件夹QDir相关操作。主要给Qml扩展|
 
-## 答疑和技术支持
+## 使用方式
 
-QQ群：734623697
+### 用法(1) -- 作为Qt模块安装
 
+TaoCommon本身是一个Qt模块，可以通过make install的方式，直接安装进QTDIR，只需要执行以下命令：
 
-### 联系方式:
+```shell
+qmake
+make
+make install
+```
+
+也可以通过QtCreator执行安装:
+
+打开TaoCommon项目，在 QtCreator的 "项目->Build 步骤" 中，添加一个 make install步骤进行安装。
+
+![](doc/QtCreaterInstall.png)
+
+### 用法(2) -- 包含源码
+
+直接在你的项目中包含TaoCommon.pri文件，
+
+include(TaoCommon/src/TaoCommon/TaoCommon.pri)
+
+## 联系方式:
 
 ***
 

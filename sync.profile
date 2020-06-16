@@ -4,10 +4,17 @@
 %dependencies = (
         "qtbase" => "",
 );
-#%classnames = (
-#    "taocommonglobal.h" => "TaoCommonGlobal",
-#    "logger/logger.h" => "Logger",
-#    "Thread/ThreadCommon.h" => "ThreadCommon",
-#    "Thread/ThreadPool.h" => "ThreadPool",
-#    "Thread/ThreadWorkerController.h" => "ThreadWorkerController",
-#);
+%classnames = (
+    "taocommonglobal.h" => "TaoCommonGlobal",
+    "filereadwrite.h" => "FileReadWrite",
+    "objectmap.h" => "ObjectMap",
+    "singleton.h" => "Singleton",
+    "subject.h" => "Subject",
+    "logger.h" => "Logger",
+    "threadcommon.h" => "ThreadCommon",
+    "threadpool.h" => "ThreadPool",
+    "threadworkercontroller.h" => "ThreadWorkerController",
+);
+
+
+
