@@ -6,6 +6,10 @@
 
 必须是经过实际项目验证过的。
 
+[github原始仓库https://github.com/jaredtao/TaoQuick](https://github.com/jaredtao/TaoCommon)
+
+[gitee镜像仓库https://gitee.com/jaredtao/TaoQuick](https://gitee.com/jaredtao/TaoCommon)
+
 ## CI
 
 | [Windows][win-link]| [Ubuntu][ubuntu-link]|[MacOS][macos-link]|[Android][android-link]|[IOS][ios-link]|
