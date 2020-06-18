@@ -1,5 +1,15 @@
-INCLUDEPATH += $$PWD
-DEPENDPATH += $$PWD
+!build_TaoCommon_lib:{
+    DEFINES +=TaoCommon_NO_LIB
+}
+
+INCLUDEPATH += $$PWD \
+    $$PWD/Common \
+    $$PWD/Logger \
+    $$PWD/Thread
+DEPENDPATH += $$PWD \
+    $$PWD/Common \
+    $$PWD/Logger \
+    $$PWD/Thread
 
 HEADERS += \
     $$PWD/Common/filereadwrite.h \
