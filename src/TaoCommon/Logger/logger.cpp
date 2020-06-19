@@ -34,7 +34,7 @@ namespace Logger
             qInstallMessageHandler(outputMessage);
         }
         
-        gLogDir = QCoreApplication::applicationDirPath() + "/" + logPath;
+        gLogDir = QCoreApplication::applicationDirPath() + QStringLiteral("/") + logPath;
         gLogMaxCount = logMaxCount;
         QDir dir(gLogDir);
         if (!dir.exists())
@@ -50,7 +50,7 @@ namespace Logger
     }
     static void outputMessageAsync(QtMsgType type, const QMessageLogContext &context, const QString &msg)
     {
-        static const QString messageTemp = QString("<div class=\"%1\">%2</div>\r\n");
+        static const QString messageTemp = QStringLiteral("<div class=\"%1\">%2</div>\r\n");
         static const char typeList[] = { 'd', 'w', 'c', 'f', 'i' };
         static QMutex mutex;
         static QFile file;
@@ -61,15 +61,15 @@ namespace Logger
         QDateTime dt = QDateTime::currentDateTime();
 
         //每小时一个文件
-        QString fileNameDt = dt.toString("yyyy-MM-dd_hh");
+        QString fileNameDt = dt.toString(QStringLiteral("yyyy-MM-dd_hh"));
 
         //每分钟一个文件
         //QString fileNameDt = dt.toString("yyyy-MM-dd_hh_mm");
 
-        QString contentDt = dt.toString("yyyy-MM-dd hh:mm:ss");
-        QString message = QString("%1 %2").arg(contentDt).arg(msg);
+        QString contentDt = dt.toString(QStringLiteral("yyyy-MM-dd hh:mm:ss"));
+        QString message = QStringLiteral("%1 %2").arg(contentDt).arg(msg);
         QString htmlMessage = messageTemp.arg(typeList[static_cast<int>(type)]).arg(message);
-        QString newfileName = QString("%1/%2_log.html").arg(gLogDir).arg(fileNameDt);
+        QString newfileName = QStringLiteral("%1/%2_log.html").arg(gLogDir).arg(fileNameDt);
         mutex.lock();
         if (file.fileName() != newfileName)
         {
@@ -105,7 +105,7 @@ namespace Logger
     }
     static void outputMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
     {
-        static const QString messageTemp = QString("<div class=\"%1\">%2</div>\r\n");
+        static const QString messageTemp = QStringLiteral("<div class=\"%1\">%2</div>\r\n");
         static const char typeList[] = { 'd', 'w', 'c', 'f', 'i' };
         static QMutex mutex;
 
@@ -113,15 +113,15 @@ namespace Logger
         QDateTime dt = QDateTime::currentDateTime();
 
         //每小时一个文件
-        QString fileNameDt = dt.toString("yyyy-MM-dd_hh");
+        QString fileNameDt = dt.toString(QStringLiteral("yyyy-MM-dd_hh"));
 
         //每分钟一个文件
         //QString fileNameDt = dt.toString("yyyy-MM-dd_hh_mm");
 
-        QString contentDt = dt.toString("yyyy-MM-dd hh:mm:ss");
-        QString message = QString("%1 %2").arg(contentDt).arg(msg);
+        QString contentDt = dt.toString(QStringLiteral("yyyy-MM-dd hh:mm:ss"));
+        QString message = QStringLiteral("%1 %2").arg(contentDt).arg(msg);
         QString htmlMessage = messageTemp.arg(typeList[static_cast<int>(type)]).arg(message);
-        QFile file(QString("%1/%2_log.html").arg(gLogDir).arg(fileNameDt));
+        QFile file(QStringLiteral("%1/%2_log.html").arg(gLogDir).arg(fileNameDt));
         mutex.lock();
 
         bool exist = file.exists();
