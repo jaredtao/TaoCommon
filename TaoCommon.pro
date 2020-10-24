@@ -3,6 +3,7 @@ CONFIG += ordered
 SUBDIRS += demo
 OTHER_FILES += \
     .* \
+    _clang-format \
     LICENSE \
     *.md \
     *.profile \
