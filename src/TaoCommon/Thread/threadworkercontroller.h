@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "taocommonglobal.h"
 #include "threadcommon.h"
 #include <QMap>
@@ -40,7 +40,7 @@ namespace TaoCommon
 
         ~ThreadController()
         {
-            for (auto k : m_threadMap.uniqueKeys())
+            for (const auto &k : m_threadMap.keys())
             {
                 if (m_threadMap.value(k)->isRunning())
                 {
@@ -95,7 +95,7 @@ namespace TaoCommon
         }
         QList<uint64_t> getAllWorkId() const 
         {
-            return m_threadMap.uniqueKeys();
+            return m_threadMap.keys();
         }
     protected slots :
         void onWorkFinished(bool ok, uint64_t id) 

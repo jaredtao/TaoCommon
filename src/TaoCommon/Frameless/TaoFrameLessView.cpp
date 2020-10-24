@@ -56,9 +56,6 @@ TaoFrameLessView::TaoFrameLessView(QWindow *parent)
 {
     setFlags(/*Qt::CustomizeWindowHint | */Qt::Window | Qt::FramelessWindowHint | Qt::WindowMinMaxButtonsHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
     setResizeMode(SizeViewToRootObject);
-    setColor(QColor(Qt::transparent));
-    setMinimumSize({1024, 720});
-    resize(1440, 960);
 
     //WS_THICKFRAME 带回Areo效果
 #if WIN32
@@ -98,7 +95,7 @@ void TaoFrameLessView::setIsMax(bool isMax)
 #if WIN32
 const long border_width = 6;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-bool TaoView::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
+bool TaoFrameLessView::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
 #else
 bool TaoFrameLessView::nativeEvent(const QByteArray &eventType, void *message, long *result)
 #endif
