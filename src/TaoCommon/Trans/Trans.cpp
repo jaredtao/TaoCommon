@@ -40,7 +40,7 @@ void Trans::loadFolder(const QString& folder)
     QDir dir(folder);
     auto infos = dir.entryInfoList({ "language_*.json" }, QDir::Files);
     QString lang;
-    for (auto info : infos) {
+    for (const auto &info : infos) {
         load(lang, info.absoluteFilePath());
     }
 
@@ -68,7 +68,7 @@ bool Trans::load(QString& lang, const QString& filePath)
     }
     lang = rootObj.value("lang").toString();
     const auto& trans = rootObj.value("trans").toArray();
-    for (auto i : trans) {
+    for (const auto &i : trans) {
         auto transObj = i.toObject();
         QString key = transObj.value("key").toString();
         QString value = transObj.value("value").toString();
@@ -102,7 +102,7 @@ void Trans::initEnglish()
         } else {
             map = m_map.value(m_map.keys().first());
         }
-        for (auto key : map.keys()) {
+        for (const auto &key : map.keys()) {
             m_map[cEnglisthStr][key] = key;
         }
     }

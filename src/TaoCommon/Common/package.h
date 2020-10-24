@@ -1,8 +1,8 @@
-﻿#pragma once
+#pragma once
 #include <QByteArray>
 #include <QByteArrayList>
 #include <QDataStream>
-
+#include <QIODevice>
 const int static headerLength = sizeof(quint32);
 
 static QByteArray pack(const QByteArray &data)
