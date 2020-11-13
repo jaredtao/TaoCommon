@@ -53,10 +53,39 @@
   |文件名|功能|
   | ---- | -------------------------------- |
   |FileReadWrite.h|文件读写、Json读写|
-  |ObjectMap.h|基础对象存储器;优先级对象存储器|
-  |package.h|简易socket数据封包、拆包|
-  |Subject.hpp|观察者模板|
-  |Common.h|QString 支持std::map; <br/> 计算md5; <br/> 计算percent字符串;<br/> |
+  |Package.h|简易socket数据封包、拆包|
+  |JsonSerialize.h|json序列化 反序列化的一些宏|
+  |PropertyHelper.h|快速生成Q_PROPERTY的一些宏|
+  |Subject.h|观察者模板|
+  |ObjectMap.h|对象存储器;优先级对象存储器。主要用来实现 "依赖注入"|
+
+可以参考[TaoQuick项目](https://github.com/jaredtao/TaoQuick)
+
+## FrameLess
+
+简易的无边框窗口，支持Windows Areo 效果
+
+可以参考[TaoQuick项目](https://github.com/jaredtao/TaoQuick)
+
+## Trans
+
+Qt动态翻译。
+
+加载自定义json格式的翻译文件。
+
+为动态切换语言做支撑。
+
+对于QWidget，可以正常用。
+
+对于Qml， Qt5.10以前，通过trans.transString的方式，触发动态切换语言，5.10以后，直接调用reTranslate
+
+可以参考[TaoQuick项目](https://github.com/jaredtao/TaoQuick)
+
+## TaoModel
+
+自定义ListModel，为大数据表格结构和树结构提供支持。
+
+可以参考[TaoQuick项目](https://github.com/jaredtao/TaoQuick)
 
 ***
 
@@ -107,6 +136,27 @@ make install
 以源码的方式使用，优点是方便，缺点是会增加编译时间。
 
 以Qt模块的方式使用，优点是不用每次都编译，缺点是要注意Qt版本一致性，且发布时要带上dll。
+
+### cmake 使用源码
+
+将TaoCommon路径添加到cmake中，使用add_subdirectory指令
+
+```cmake
+add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/TaoCommon ${CMAKE_SOURCE_DIR}/build/3rdparty/TaoCommon)
+```
+添加此路径,能够获得两个宏定义TaoCommonPath 和 TaoCommonFiles
+
+TaoCommonPath添加到头文件路径
+TaoCommonFiles添加到execulate的
+
+示例如下:
+```cmake
+add_executable(${TargetName}
+        ${OtherSourceFiles}
+        ${TaoCommonFiles}
+        )
+target_include_directories(${TargetName} PUBLIC . ${TaoCommonPath})
+```
 
 ## 联系作者
 
