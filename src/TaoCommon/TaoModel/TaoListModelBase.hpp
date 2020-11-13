@@ -83,7 +83,7 @@ QVariant TaoListModelBase<T>::data(const QModelIndex &index, int role) const
 template<class T>
 QVariant TaoListModelBase<T>::data(int row) const
 {
-    return data(index(row), Qt::DisplayRole);
+    data(index(row), Qt::DisplayRole);
 }
 template<class T>
 void TaoListModelBase<T>::resetData(const QList<T> &datas)
