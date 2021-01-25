@@ -10,11 +10,15 @@ const static auto cEnglisthStr = u8"English";
 const static auto cChineseStr = u8"简体中文";
 Trans::Trans(QObject *parent) : QTranslator(parent) {}
 
-void Trans::beforeUiReady(QQmlContext *ctx)
+void Trans::beforeUiReady(QQmlContext *ctx, const QString &folder)
 {
     m_ctx = ctx;
     ctx->setContextProperty("trans", this);
-    loadFolder(qApp->applicationDirPath() + "/Trans");
+    if (folder.isEmpty()) {
+        loadFolder(qApp->applicationDirPath() + "/Trans");
+    } else {
+        loadFolder(folder);
+    }
     qApp->installTranslator(this);
 }
 
@@ -32,6 +36,7 @@ QString Trans::translate(const char *context, const char *sourceText, const char
 
 void Trans::loadFolder(const QString &folder)
 {
+    qWarning() << "Trans loadFolder" << folder;
     QDir dir(folder);
     auto infos = dir.entryInfoList({ "language_*.json" }, QDir::Files);
     QString lang;
