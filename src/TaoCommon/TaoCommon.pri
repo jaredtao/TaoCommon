@@ -5,6 +5,7 @@
 INCLUDEPATH += $$PWD 
 
 HEADERS += \
+    $$PWD/TaoCommonGlobal.h \
     $$PWD/Common/FileReadWrite.h \
     $$PWD/Common/JsonSerialize.h \
     $$PWD/Common/ObjectMap.h \
@@ -15,7 +16,6 @@ HEADERS += \
     $$PWD/Logger/Logger.h \
     $$PWD/Logger/LoggerTemplate.h \
     $$PWD/QuickTool/QuickTool.h \
-    $$PWD/TaoCommonGlobal.h \
     $$PWD/TaoModel/TaoListItemBase.h \
     $$PWD/TaoModel/TaoListModel.h \
     $$PWD/TaoModel/TaoListModelBase.hpp \
@@ -35,7 +35,8 @@ SOURCES += \
 win32 {
     SOURCES += \
         $$PWD/Frameless/TaoFrameLessView_win.cpp
-} else {
+}
+!win32 {
     SOURCES += \
         $$PWD/Frameless/TaoFrameLessView_unix.cpp
 }

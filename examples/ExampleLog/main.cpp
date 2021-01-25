@@ -1,4 +1,4 @@
-#include "Logger"
+#include "TaoCommon/Logger/Logger.h"
 #include <QCoreApplication>
 #include <QTimer>
 #include <atomic>
