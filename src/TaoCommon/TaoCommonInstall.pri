@@ -13,11 +13,11 @@ framelessHeader.path=$$headersTargetPath/Frameless
 loggerHeader.files=$$PWD/Logger/*.h
 loggerHeader.path=$$headersTargetPath/Logger
 
+quickModelHeader.files=$$PWD/QuickModel/*.h
+quickModelHeader.path=$$headersTargetPath/QuickModel
+
 quickToolHeader.files=$$PWD/QuickTool/*.h
 quickToolHeader.path=$$headersTargetPath/QuickTool
-
-taoModelHeader.files=$$PWD/TaoModel/*.h $$PWD/TaoModel/*.hpp
-taoModelHeader.path=$$headersTargetPath/TaoModel
 
 threadHeader.files=$$PWD/Thread/*.h
 threadHeader.path=$$headersTargetPath/Thread
@@ -27,5 +27,5 @@ transHeader.path=$$headersTargetPath/Trans
 
 
 INSTALLS += \
-    gHeader commonHeader framelessHeader loggerHeader quickToolHeader \
-    taoModelHeader threadHeader transHeader
+    gHeader commonHeader framelessHeader loggerHeader quickModelHeader \
+    quickToolHeader threadHeader transHeader

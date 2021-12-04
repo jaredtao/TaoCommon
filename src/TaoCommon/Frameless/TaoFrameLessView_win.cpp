@@ -199,7 +199,7 @@ void TaoFrameLessView::setIsMax(bool isMax)
 
 void TaoFrameLessView::resizeEvent(QResizeEvent* e)
 {
-    SetWindowRgn(HWND(winId()), CreateRoundRectRgn(0, 0, width(), height(), 4, 4), true);
+    //SetWindowRgn(HWND(winId()), CreateRoundRectRgn(0, 0, width(), height(), 4, 4), true);
     Super::resizeEvent(e);
 }
 
