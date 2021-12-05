@@ -38,7 +38,11 @@ protected:
 #    endif
     void mousePressEvent(QMouseEvent* event) override
     {
+#    if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        emit mousePressed(event->position().x(), event->position().y(), event->button());
+#else
         emit mousePressed(event->x(), event->y(), event->button());
+#endif
         Super::mousePressEvent(event);
     }
 
