@@ -6,7 +6,8 @@
 #include <QWindow>
 
 #include <windows.h>
-
+#include <VersionHelpers.h>
+#include <wtypes.h>
 #include <WinUser.h>
 #include <dwmapi.h>
 #include <objidl.h> // Fixes error C2504: 'IUnknown' : base class undefined
@@ -98,6 +99,7 @@ class TaoFrameLessViewPrivate
 public:
     bool m_isMax;
     QQuickItem* m_titleItem = nullptr;
+    HMENU mMenuHandler = NULL;
     bool borderless = true;        // is the window currently borderless
     bool borderless_resize = true; // should the window allow resizing by dragging the borders while borderless
     bool borderless_drag = true;   // should the window allow moving my dragging the client area
@@ -140,10 +142,28 @@ TaoFrameLessView::TaoFrameLessView(QWindow* parent)
 
     setIsMax(isMaxWin(this));
     connect(this, &QWindow::windowStateChanged, this, [&](Qt::WindowState state) { setIsMax(state == Qt::WindowMaximized); });
+    {
+        // Qt 5.15.2 的bug; 问题复现及解决方法：当使用WM_NCCALCSIZE 修改非客户区大小后，移动窗口到其他屏幕时，qwindows.dll 源码 qwindowswindow.cpp:2447 updateFullFrameMargins() 函数
+        // 处会调用qwindowswindow.cpp:2453 的 calculateFullFrameMargins函数重新获取默认的非客户区大小，导致最外层窗口移动屏幕时会触发resize消息，引起40像素左右的黑边；故此处创建Menu
+        // 使其调用qwindowswindow.cpp:2451 的 QWindowsContext::forceNcCalcSize() 函数计算非客户区大小
+
+        //已知负面效果: 引入win32 MENU后，Qt程序中如果有alt开头的快捷键，会不生效，被Qt滤掉了，需要修改Qt源码
+        //QWindowsKeyMapper::translateKeyEventInternal 中的
+        //if (msgType == WM_SYSKEYDOWN && (nModifiers & AltAny) != 0 && GetMenu(msg.hwnd) != nullptr)
+        //  return false;
+        // 这两行屏蔽掉
+
+        d->mMenuHandler = ::CreateMenu();
+        ::SetMenu((HWND)winId(), d->mMenuHandler);
+    }
 }
 
 TaoFrameLessView::~TaoFrameLessView()
 {
+    if(d->mMenuHandler != NULL)
+    {
+        ::DestroyMenu(d->mMenuHandler);
+    }
     delete d;
 }
 bool TaoFrameLessView::isMax() const
