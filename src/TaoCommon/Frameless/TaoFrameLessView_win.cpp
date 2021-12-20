@@ -97,7 +97,8 @@ static bool isFullWin(QQuickView* win)
 class TaoFrameLessViewPrivate
 {
 public:
-    bool m_isMax;
+    bool m_isMax = false;
+    bool m_isFull = false;
     QQuickItem* m_titleItem = nullptr;
     HMENU mMenuHandler = NULL;
     bool borderless = true;        // is the window currently borderless
@@ -140,8 +141,14 @@ TaoFrameLessView::TaoFrameLessView(QWindow* parent)
     d->setBorderLess((HWND)(winId()), d->borderless);
     d->setBorderLessShadow((HWND)(winId()), d->borderless_shadow);
 
-    setIsMax(isMaxWin(this));
-    connect(this, &QWindow::windowStateChanged, this, [&](Qt::WindowState state) { setIsMax(state == Qt::WindowMaximized); });
+    setIsMax(windowState() == Qt::WindowMaximized);
+    setIsFull(windowState() == Qt::WindowFullScreen);
+    connect(this, &QWindow::windowStateChanged, this, [&](Qt::WindowState state) {
+        (void)state;
+        setIsMax(windowState() == Qt::WindowMaximized);
+        setIsFull(windowState() == Qt::WindowFullScreen);
+    });
+
     {
         // Qt 5.15.2 的bug; 问题复现及解决方法：当使用WM_NCCALCSIZE 修改非客户区大小后，移动窗口到其他屏幕时，qwindows.dll 源码 qwindowswindow.cpp:2447 updateFullFrameMargins() 函数
         // 处会调用qwindowswindow.cpp:2453 的 calculateFullFrameMargins函数重新获取默认的非客户区大小，导致最外层窗口移动屏幕时会触发resize消息，引起40像素左右的黑边；故此处创建Menu
@@ -166,9 +173,15 @@ TaoFrameLessView::~TaoFrameLessView()
     }
     delete d;
 }
+
 bool TaoFrameLessView::isMax() const
 {
     return d->m_isMax;
+}
+
+bool TaoFrameLessView::isFull() const
+{
+    return d->m_isFull;
 }
 QQuickItem* TaoFrameLessView::titleItem() const
 {
@@ -216,7 +229,14 @@ void TaoFrameLessView::setIsMax(bool isMax)
     d->m_isMax = isMax;
     emit isMaxChanged(d->m_isMax);
 }
+void TaoFrameLessView::setIsFull(bool isFull)
+{
+    if(d->m_isFull == isFull)
+        return;
 
+    d->m_isFull = isFull;
+    emit isFullChanged(d->m_isFull);
+}
 void TaoFrameLessView::resizeEvent(QResizeEvent* e)
 {
     //SetWindowRgn(HWND(winId()), CreateRoundRectRgn(0, 0, width(), height(), 4, 4), true);
