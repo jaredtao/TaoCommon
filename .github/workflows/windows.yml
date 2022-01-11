@@ -2,16 +2,14 @@ name: Windows
 on: 
   # push代码时触发workflow
   push:
-    # 忽略README.md
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
+    paths:
+      - 'src/**'
+      - '.github/workflows/windows.yml'
   # pull_request时触发workflow
   pull_request:
-    # 忽略README.md
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
+    paths:
+      - 'src/**'
+      - '.github/workflows/windows.yml'
 jobs:
   build:
     name: Build
@@ -53,14 +51,13 @@ jobs:
       # 安装Qt
       - name: Install Qt
         # 使用外部action。这个action专门用来安装Qt
-        uses: jurplel/install-qt-action@v2.10.0
+        uses: jurplel/install-qt-action@v2
         with:
           # Version of Qt to install
           version: ${{ matrix.qt_ver }}
           # Target platform for build
           # target: ${{ matrix.qt_target }}
           arch: ${{ matrix.qt_arch }}
-          aqtversion: '==0.10.0'
           cached: 'false'
       # 拉取代码
       - uses: actions/checkout@v1

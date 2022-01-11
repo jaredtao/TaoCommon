@@ -1,11 +1,13 @@
 name: IOS
 on: 
   push:
-    paths-ignore:
-      - 'README.md'
+    paths:
+      - 'src/**'
+      - '.github/workflows/ios.yml'
   pull_request:
-    paths-ignore:
-      - 'README.md'
+    paths:
+      - 'src/**'
+      - '.github/workflows/ios.yml'
 jobs:
   build:
     name: Build
@@ -18,7 +20,7 @@ jobs:
     steps:
       - name: Install Qt
         # if: steps.cacheqt.outputs.cache-hit != 'true'
-        uses: jurplel/install-qt-action@v2.10.0
+        uses: jurplel/install-qt-action@v2
         with:
           # Version of Qt to install
           version: ${{ matrix.qt_ver }}
