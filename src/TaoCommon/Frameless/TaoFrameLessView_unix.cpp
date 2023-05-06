@@ -20,11 +20,16 @@ TaoFrameLessView::TaoFrameLessView(QWindow* parent)
 
 	setIsMax(windowState() == Qt::WindowMaximized);
 	setIsFull(windowState() == Qt::WindowFullScreen);
-	connect(this, &QWindow::windowStateChanged, this, [&](Qt::WindowState state) {
-		(void)state;
-		setIsMax(windowState() == Qt::WindowMaximized);
-		setIsFull(windowState() == Qt::WindowFullScreen);
-	});
+	connect(
+		this,
+		&QWindow::windowStateChanged,
+		this,
+		[&](Qt::WindowState state)
+		{
+			(void)state;
+			setIsMax(windowState() == Qt::WindowMaximized);
+			setIsFull(windowState() == Qt::WindowFullScreen);
+		});
 }
 TaoFrameLessView::~TaoFrameLessView()
 {
