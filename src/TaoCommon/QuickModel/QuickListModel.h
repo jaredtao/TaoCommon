@@ -1,179 +1,123 @@
 #pragma once
 
+#include "Common/PropertyHelper.h"
 #include "QuickListItemBase.h"
 #include "QuickModelBase.hpp"
 #include "TaoCommonGlobal.h"
 #include <QTimer>
+
 class TAO_API QuickListModel : public QuickModelBase<QuickListItemBase*>
 {
-	Q_OBJECT
-	Q_PROPERTY(bool allChecked READ allChecked WRITE setAllChecked NOTIFY allCheckedChanged)
-	Q_PROPERTY(int visibledCount READ visibledCount NOTIFY visibledCountChanged)
-	Q_PROPERTY(int selectedCount READ selectedCount NOTIFY selectedCountChanged)
-	Q_PROPERTY(int checkedCount READ checkedCount NOTIFY checkedCountChanged)
+    Q_OBJECT
+    Q_PROPERTY(bool allChecked READ allChecked WRITE setAllChecked NOTIFY allCheckedChanged)
+    AUTO_PROPERTY(int, visibledCount, 0)
+    AUTO_PROPERTY(int, selectedCount, 0)
+    AUTO_PROPERTY(int, checkedCount, 0)
 
-	Q_PROPERTY(QStringList headerRoles READ headerRoles WRITE setHeaderRoles NOTIFY headerRolesChanged)
-	Q_PROPERTY(Qt::SortOrder sortOrder READ sortOrder WRITE setSortOrder NOTIFY sortOrderChanged)
-	Q_PROPERTY(QString sortRole READ sortRole WRITE setSortRole NOTIFY sortRoleChanged)
-
+    AUTO_PROPERTY(QStringList, headerRoles, {})
+    AUTO_PROPERTY(Qt::SortOrder, sortOrder, Qt::AscendingOrder)
+    AUTO_PROPERTY(QString, sortRole, {})
+    AUTO_PROPERTY(QStringList, noSortRoles, {})
 public:
-	using Super = QuickModelBase<QuickListItemBase*>;
-	explicit QuickListModel(QObject* parent = nullptr);
-	~QuickListModel() override;
-	Q_INVOKABLE QVariant data(int row) const
-	{
-		return Super::data(row);
-	}
-	//[begin] check
-	bool allChecked() const
-	{
-		return mAllChecked;
-	}
-	Q_INVOKABLE void check(int row, bool checked);
-	//[end] check
+    using Super = QuickModelBase<QuickListItemBase*>;
+    explicit QuickListModel(QObject* parent = nullptr);
+    ~QuickListModel() override;
+    Q_INVOKABLE QVariant data(int row) const
+    {
+        return Super::data(row);
+    }
+    //[begin] check
+    bool allChecked() const
+    {
+        return mAllChecked;
+    }
+    Q_INVOKABLE void check(int row, bool checked);
+    //[end] check
 
-	//[begin] search. control visible
-	Q_INVOKABLE void search(const QString& searchKey);
-	const QString&	 searchKey() const
-	{
-		return mSearchkey;
-	}
-	Q_INVOKABLE void searchImmediate(const QString& searchKey);
-	Q_INVOKABLE void clearSearchKey()
-	{
-		mSearchkey.clear();
-	}
-	//[end] search
+    //[begin] search. control visible
+    Q_INVOKABLE void search(const QString& searchKey);
+    const QString& searchKey() const
+    {
+        return mSearchkey;
+    }
+    Q_INVOKABLE void searchImmediate(const QString& searchKey);
+    Q_INVOKABLE void clearSearchKey()
+    {
+        mSearchkey.clear();
+    }
+    //[end] search
 
-	using VisibleCallback = std::function<bool(QuickListItemBase*)>;
-	void setVisibleFilter(const VisibleCallback& callback)
-	{
-		mVisibleCallback = callback;
-	}
+    using VisibleCallback = std::function<bool(QuickListItemBase*)>;
+    void setVisibleFilter(const VisibleCallback& callback)
+    {
+        mVisibleCallback = callback;
+    }
 
-	//[begin] select
-	Q_INVOKABLE void deselectAll();
-	Q_INVOKABLE void selectAll();
-	Q_INVOKABLE bool isSelected(int row) const;
-	Q_INVOKABLE void select(int row);
-	Q_INVOKABLE void deselect(int row);
-	Q_INVOKABLE void selectRange(int from, int to);
-	Q_INVOKABLE void selectSingle(int row);
-	//[end] select
+    QList<QuickListItemBase*> allCheckedDatas() const;
 
-	Q_INVOKABLE void doPress(int row, bool shift, bool ctrl, bool outRange);
-	Q_INVOKABLE void doMove(int row, bool outRange);
-	Q_INVOKABLE void doRelease();
+    //[begin] select
+    Q_INVOKABLE void deselectAll();
+    Q_INVOKABLE void selectAll();
+    Q_INVOKABLE bool isSelected(int row) const;
+    Q_INVOKABLE void select(int row);
+    Q_INVOKABLE void deselect(int row);
+    Q_INVOKABLE void selectRange(int from, int to);
+    Q_INVOKABLE void selectSingle(int row);
+    //[end] select
 
-	//[begin] sort
-	const QStringList& headerRoles() const
-	{
-		return mHeaderRoles;
-	}
+    Q_INVOKABLE void doPress(int row, bool shift, bool ctrl, bool outRange);
+    Q_INVOKABLE void doMove(int row, bool outRange);
+    Q_INVOKABLE void doRelease();
 
-	Qt::SortOrder sortOrder() const
-	{
-		return mSortOrder;
-	}
+    //[begin] sort
 
-	const QString& sortRole() const
-	{
-		return mSortRole;
-	}
-	using SortCallback = std::function<bool(QuickListItemBase*, QuickListItemBase*)>;
-	// Map <key, callBack> ,key should match to headerRoles
-	void setSortCallbacksAscend(const QMap<QString, SortCallback>& callbacksMap)
-	{
-		mSortCallbacksAscend = callbacksMap;
-	}
-	void setSortCallbacksDescend(const QMap<QString, SortCallback>& callbacksMap)
-	{
-		mSortCallbacksDescend = callbacksMap;
-	}
+    using SortCallback = std::function<bool(QuickListItemBase*, QuickListItemBase*)>;
+    // Map <key, callBack> ,key should match to headerRoles
+    void setSortCallbacksAscend(const QMap<QString, SortCallback>& callbacksMap)
+    {
+        mSortCallbacksAscend = callbacksMap;
+    }
 
-	Q_INVOKABLE virtual void sortByRole();
-	//[end] sort
+    Q_INVOKABLE virtual void sortByRole();
+    //[end] sort
 
-	//[begin] count
-	int visibledCount() const
-	{
-		return mVisibledCount;
-	}
+    void updateCalcInfo() override;
 
-	int selectedCount() const
-	{
-		return mSelectedCount;
-	}
-
-	int checkedCount() const
-	{
-		return mCheckedCount;
-	}
-	//[end] count
-
-	void updateCalcInfo() override;
-
-	Q_INVOKABLE void notifyScrollTo(int index)
-	{
-		emit scrollTo(index);
-	}
+    Q_INVOKABLE void notifyScrollTo(int index)
+    {
+        emit scrollTo(index);
+    }
 public slots:
-	void setAllChecked(bool allChecked);
-
-	void setHeaderRoles(const QStringList& headerRoles);
-
-	void setSortOrder(Qt::SortOrder sortOrder);
-
-	void setSortRole(const QString& sortRole);
-
-	void setVisibledCount(int visibledCount);
-	void setSelectedCount(int selectedCount);
-	void setCheckedCount(int checkedCount);
+    void setAllChecked(bool allChecked);
 
 signals:
-	void scrollTo(int index);
-	void allCheckedChanged(bool allChecked);
-	void visibledCountChanged(int visibledCount);
+    void scrollTo(int index);
+    void allCheckedChanged(bool allChecked);
 
-	void selectedAction();
+    void selectedAction();
 
-	void selectedCountChanged(int selectedCount);
+    void signalUpdateCalcCount();
 
-	void checkedCountChanged(int checkedCount);
-
-	void headerRolesChanged(const QStringList& headerRoles);
-
-	void sortOrderChanged(Qt::SortOrder sortOrder);
-
-	void sortRoleChanged(const QString& sortRole);
-
-	void signalUpdateCalcCount();
-
-	void beginSearch();
-	void endSearch();
+    void beginSearch();
+    void endSearch();
 protected slots:
-	void onSearch();
+    void onSearch();
 
 protected:
-	void updateAllCheck();
-	void updateVisibleCount();
-	void updateSelectedCount();
-	void updateCheckedCount();
-	void updateAlternate();
+    void updateAllCheck();
+    void updateVisibleCount();
+    void updateSelectedCount();
+    void updateCheckedCount();
+    void updateAlternate();
 
 protected:
-	bool						mAllChecked		= false;
-	bool						mIsPressed		= false;
-	Qt::SortOrder				mSortOrder		= Qt::AscendingOrder;
-	int							mVisibledCount	= 0;
-	int							mSelectedCount	= 0;
-	int							mCheckedCount	= 0;
-	int							mLastPressedRow = -1;
-	QStringList					mHeaderRoles;
-	QString						mSortRole;
-	QMap<QString, SortCallback> mSortCallbacksAscend;
-	QMap<QString, SortCallback> mSortCallbacksDescend;
-	QString						mSearchkey;
-	QTimer						mSearchTimer;
-	VisibleCallback				mVisibleCallback;
+    bool mAllChecked = false;
+    bool mIsPressed = false;
+
+    int mLastPressedRow = -1;
+
+    QMap<QString, SortCallback> mSortCallbacksAscend;
+    QString mSearchkey;
+    QTimer mSearchTimer;
+    VisibleCallback mVisibleCallback;
 };
